@@ -57,6 +57,61 @@ This is the backend for an Uber clone application, built with Node.js, Express, 
 }
 ```
 
+### User Login
+
+**Endpoint:** `POST /login`
+
+**Description:** Authenticates a user by verifying their email and password. If successful, returns a JWT token and user details.
+
+**Request Body:**
+```json
+{
+  "email": "string",
+  "password": "string"
+}
+```
+
+**Validation Rules:**
+- `email`: Must be a valid email address.
+- `password`: Must be at least 6 characters long.
+
+**Response (Success - 201):**
+```json
+{
+  "token": "jwt_token_here",
+  "user": {
+    "_id": "user_id",
+    "fullname": {
+      "firstname": "string",
+      "lastname": "string"
+    },
+    "email": "string",
+    "socketId": "string",
+    "createdAt": "timestamp",
+    "updatedAt": "timestamp"
+  }
+}
+```
+
+**Response (Error - 400):**
+```json
+{
+  "error": [
+    {
+      "msg": "error_message",
+      "param": "field_name"
+    }
+  ]
+}
+```
+
+**Response (Error - 401):**
+```json
+{
+  "message": "Incorrect email and password"
+}
+```
+
 ## Database Schema
 
 ### User Model
