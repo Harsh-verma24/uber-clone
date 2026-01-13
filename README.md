@@ -112,6 +112,64 @@ This is the backend for an Uber clone application, built with Node.js, Express, 
 }
 ```
 
+### User Profile
+
+**Endpoint:** `GET /user/profile`
+
+**Description:** Retrieves the authenticated user's profile information. Requires a valid JWT token.
+
+**Headers:**
+```
+Authorization: Bearer <jwt_token>
+```
+
+**Response (Success - 200):**
+```json
+{
+  "_id": "user_id",
+  "fullname": {
+    "firstname": "string",
+    "lastname": "string"
+  },
+  "email": "string",
+  "socketId": "string",
+  "createdAt": "timestamp",
+  "updatedAt": "timestamp"
+}
+```
+
+**Response (Error - 401):**
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+### User Logout
+
+**Endpoint:** `GET /user/logout`
+
+**Description:** Logs out the authenticated user by clearing the authentication cookie. Requires a valid JWT token.
+
+**Headers:**
+```
+Authorization: Bearer <jwt_token>
+```
+
+**Response (Success - 200):**
+```json
+{
+  "message": "Logged out successfully"
+}
+```
+
+**Response (Error - 401):**
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
 ## Database Schema
 
 ### User Model

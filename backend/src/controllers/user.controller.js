@@ -3,14 +3,12 @@ const { validationResult } = require("express-validator");
 const userModel = require("../models/user.model");
 const userService = require("../services/user.service")
 
-module.exports.registerUser = async function (req, res) {
+module.exports.registerUser = async function (req, res, next) {
   const error = validationResult(req);
   if (!error.isEmpty()) {
-    res
-      .json({
-        error: error.array(),
-      })
-      .status(400);
+    return res.status(400).json({
+      error: error.array(),
+    });
   }
   const { fullname, email, password } = req.body;
   console.log(req.body)
@@ -31,30 +29,38 @@ module.exports.registerUser = async function (req, res) {
   });
 };
 
-module.exports.loginUser = async function(req, res){
+module.exports.loginUser = async function(req, res, next){
   const error = validationResult(req);
   if (!error.isEmpty()) {
-    res
-      .json({
-        error: error.array(),
-      })
-      .status(400);
+    return res.status(400).json({
+      error: error.array(),
+    });
   }
   const {email, password} = req.body;
   const user = await userModel.findOne({email:email}).select("+password")
   if(!user){
-    res.json({
+    return res.status(401).json({
       message:"Incorrect email and password"
-    }).status(401)
+    });
   }
 
   const isPasswordMatched = await user.comparePassword(password);
 
   if(!isPasswordMatched){
-    res.json({
+    return res.status(401).json({
       message:"Incorrect email and password"
-    }).status(401)
+    });
   }
   const token = user.generateAuthToken();
-  return res.json({token,user}).status(201)
+  res.cookie("token", token)
+  return res.status(200).json({token,user});
+}
+
+module.exports.getUserProfile = async function(req, res,next){
+  res.status(200).json(req.user);
+}
+
+module.exports.logoutUser = async function(req, res,next){
+  res.clearCookie("token");
+  res.status(200).json({message:"Logged out successfully"});
 }
