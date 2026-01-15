@@ -6,7 +6,7 @@ This is the backend for an Uber clone application, built with Node.js, Express, 
 
 ### User Registration
 
-**Endpoint:** `POST /register`
+**Endpoint:** `POST /user/register`
 
 **Description:** Registers a new user in the system. The user's password is hashed before storage for security.
 
@@ -59,7 +59,7 @@ This is the backend for an Uber clone application, built with Node.js, Express, 
 
 ### User Login
 
-**Endpoint:** `POST /login`
+**Endpoint:** `POST /user/login`
 
 **Description:** Authenticates a user by verifying their email and password. If successful, returns a JWT token and user details.
 
@@ -246,6 +246,121 @@ Authorization: Bearer <jwt_token>
 ```json
 {
   "message": "User already exist with this email"
+}
+```
+
+### Driver Login
+
+**Endpoint:** `POST /driver/login`
+
+**Description:** Authenticates a driver by verifying their email and password. If successful, returns a JWT token and driver details.
+
+**Request Body:**
+```json
+{
+  "email": "string",
+  "password": "string"
+}
+```
+
+**Validation Rules:**
+- `email`: Must be a valid email address.
+- `password`: Must be at least 6 characters long.
+
+**Response (Success - 200):**
+```json
+{
+  "token": "jwt_token_here",
+  "driver": {
+    "_id": "driver_id",
+    "fullname": {
+      "firstname": "string",
+      "lastname": "string"
+    },
+    "email": "string",
+    "vehicle": {
+      "vehicleNumber": "string",
+      "vehicleType": "string",
+      "vehicleModel": "string",
+      "vehicleColor": "string",
+      "vehicleCapacity": number
+    },
+    "socketId": "string",
+    "createdAt": "timestamp",
+    "updatedAt": "timestamp"
+  }
+}
+```
+
+**Response (Error - 401):**
+```json
+{
+  "message": "Invalid email or password"
+}
+```
+
+### Driver Profile
+
+**Endpoint:** `GET /driver/profile`
+
+**Description:** Retrieves the authenticated driver's profile information. Requires a valid JWT token.
+
+**Headers:**
+```
+Authorization: Bearer <jwt_token>
+```
+
+**Response (Success - 200):**
+```json
+{
+  "_id": "driver_id",
+  "fullname": {
+    "firstname": "string",
+    "lastname": "string"
+  },
+  "email": "string",
+  "vehicle": {
+    "vehicleNumber": "string",
+    "vehicleType": "string",
+    "vehicleModel": "string",
+    "vehicleColor": "string",
+    "vehicleCapacity": number
+  },
+  "socketId": "string",
+  "createdAt": "timestamp",
+  "updatedAt": "timestamp"
+}
+```
+
+**Response (Error - 401):**
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+### Driver Logout
+
+**Endpoint:** `GET /driver/logout`
+
+**Description:** Logs out the authenticated driver by clearing the authentication cookie. Requires a valid JWT token.
+
+**Headers:**
+```
+Authorization: Bearer <jwt_token>
+```
+
+**Response (Success - 200):**
+```json
+{
+  "message": "Logged out successfully"
+}
+```
+
+**Response (Error - 401):**
+```json
+{
+  "message": "Unauthorized"
 }
 ```
 
