@@ -8,6 +8,8 @@ import DriverRegisterPage from "./pages/DriverRegisterPage";
 import Home from "./pages/Home";
 import UserProtectWrapper from "./pages/UserProtectWrapper";
 import UserLogout from "./pages/UserLogout";
+import DriverHome from "./pages/DriverHome";
+import DriverProtectWrapper from "./pages/DriverProtectWrapper";
 const App = () => {
   return (
     <>
@@ -31,6 +33,14 @@ const App = () => {
             <UserProtectWrapper>
               <UserLogout />
             </UserProtectWrapper>
+          }
+        />
+        <Route
+          path="/driver-home"
+          element={
+            <DriverProtectWrapper>
+              <DriverHome />
+            </DriverProtectWrapper>
           }
         />
       </Routes>
