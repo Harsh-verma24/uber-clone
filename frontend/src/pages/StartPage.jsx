@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { RiArrowRightLine } from "@remixicon/react";
+import {MoveRight} from "lucide-react";
 
 const StartPage = () => {
   return (
@@ -19,7 +19,7 @@ const StartPage = () => {
       ">
         <Link to={"/user-login"} className="inline-flex gap-8 text-white bg-green-800 w-[90%] py-4 justify-center items-center
         font-semibold text-2xl rounded text-center ">
-          Get Started <RiArrowRightLine />
+          Get Started <MoveRight  />
         </Link>
       </div>
     </div>
