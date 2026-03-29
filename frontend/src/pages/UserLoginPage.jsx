@@ -1,9 +1,32 @@
+import axios from 'axios';
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserDataContext } from '../context/UserContext';
 
 const UserLoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const {setUser} = React.useContext(UserDataContext);
+const navigate = useNavigate();
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    const userInfo = {
+      email,
+      password
+    };
+
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/user/login`,
+      userInfo
+    );
+    if(response.status === 200){
+      const data = response.data;
+      setUser(data.user);
+      localStorage.setItem("token",data.token);
+      navigate("/home");
+    }
+    // Handle login logic here
+  }
   return (
     <div className='w-full h-screen'>
        <div className="w-full pt-[1.2rem] pl-[1.2rem]" id="logo">
@@ -17,7 +40,7 @@ const UserLoginPage = () => {
         <h1>User Login</h1>
       </div>
       <section>
-        <form >
+        <form onSubmit={handleSubmit}>
           <div className='flex flex-col gap-[1rem] w-full py-[1rem] px-[1rem]'>
             <h3
              className='text-[1.2rem] font-semibold'>
