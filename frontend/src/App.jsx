@@ -10,6 +10,7 @@ import UserProtectWrapper from "./pages/UserProtectWrapper";
 import UserLogout from "./pages/UserLogout";
 import DriverHome from "./pages/DriverHome";
 import DriverProtectWrapper from "./pages/DriverProtectWrapper";
+import DriverLogout from "./pages/DriverLogout";
 const App = () => {
   return (
     <>
@@ -40,6 +41,14 @@ const App = () => {
           element={
             <DriverProtectWrapper>
               <DriverHome />
+            </DriverProtectWrapper>
+          }
+        />
+        <Route
+          path="/driver/logout"
+          element={
+            <DriverProtectWrapper>
+              <DriverLogout />
             </DriverProtectWrapper>
           }
         />
