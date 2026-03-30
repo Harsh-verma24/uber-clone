@@ -9,8 +9,11 @@ const userRoutes = require("./src/routes/user.route.js")
 const driverRoutes = require("./src/routes/driver.route.js")
 
 connectDB();
+
+const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/+$/, '');
+
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    origin: frontendUrl,
     credentials: true
 }));
 app.use(cookieParser());
