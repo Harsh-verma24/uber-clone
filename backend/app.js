@@ -10,7 +10,7 @@ const driverRoutes = require("./src/routes/driver.route.js")
 
 connectDB();
 
-const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:3000').replace(/\/+$/, '');
+const frontendUrl = (process.env.FRONTEND_URL || 'http://localhost:5173').replace(/\/+$/, '');
 
 app.use(cors({
     origin: frontendUrl,
